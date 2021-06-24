@@ -61,19 +61,19 @@ export default {
 
   auth: {
     redirect: {
-      login: '/auth/login',
-      logout: '/auth/login',
+      login: '/admin/auth/login',
+      logout: '/admin/auth/login',
       home: '/'
     },
 
     strategies: {
-      local: {
+      admin: {
         provider: 'laravel/jwt',
         url: process.env.API_URL,
         endpoints: {
-          login: {url: '/auth/login', method: 'post', propertyName: 'access_token'},
-          user: {url: '/auth/me', method: 'get', propertyName: 'user'},
-          logout: {url: '/auth/logout', method: 'post'},
+          login: {url: 'admin/auth/login', method: 'post', propertyName: 'access_token'},
+          user: {url: 'admin/auth/me', method: 'get', propertyName: 'user'},
+          logout: {url: 'admin/auth/logout', method: 'post'},
         },
         token: {
           property: 'access_token',

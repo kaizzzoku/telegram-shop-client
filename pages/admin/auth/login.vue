@@ -54,14 +54,14 @@
 
     methods: {
       login() {
-        this.$auth.loginWith('local', {
+        this.$auth.loginWith('admin', {
           data: {
             email: this.login_form.email,
             password: this.login_form.password,
           },
         }).then(response => {
           this.$toast.success('You successfully logged in');
-          this.$router.push({path: '/products'});
+          this.$router.push({path: '/admin/dashboard'});
         }).catch(errors => {
           this.errors = errors.response.data.errors;
         });
