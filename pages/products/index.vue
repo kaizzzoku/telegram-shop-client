@@ -34,64 +34,64 @@
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex';
+  import {mapGetters, mapActions} from 'vuex';
 
-export default {
-  data() {
-    return {
-      per_page: 16,
-      per_row: 4,
-      products_count: 0,
-    };
-  },
-
-  computed: {
-    ...mapGetters({
-      'products': 'product/products',
-      'productsLoaded': 'product/productsLoaded',
-    }),
-
-    page() {
-      return this.$route.params.page;
+  export default {
+    data() {
+      return {
+        per_page: 16,
+        per_row: 4,
+        products_count: 0,
+      };
     },
 
-    groupProducts() {
-      let list = this.products;
-      let groups = [[], [], [], [],];
+    computed: {
+      ...mapGetters({
+        'products': 'product/products',
+        'productsLoaded': 'product/productsLoaded',
+      }),
 
-      for (let p of list) {
-        for (let group of groups) {
-          if (group.length < this.per_row) {
-            group.push(p);
+      page() {
+        return this.$route.params.page;
+      },
+
+      groupProducts() {
+        let list = this.products;
+        let groups = [[], [], [], [],];
+
+        for (let p of list) {
+          for (let group of groups) {
+            if (group.length < this.per_row) {
+              group.push(p);
+            }
           }
         }
+
+        return groups;
+      },
+
+      paginatedProducts() {
+        /*
+        return this.products.slice(
+          this.page == 1 ? 0 : this.page * this.per_page,
+          this.page * this.per_page > this.products.length ?
+        );
+         */
+      },
+    },
+
+    methods: {
+      ...mapActions({
+        'getProducts': 'product/getProducts',
+      }),
+    },
+
+    mounted() {
+      if (!this.productsLoaded) {
+        this.getProducts();
       }
-
-      return groups;
-    },
-
-    paginatedProducts() {
-      /*
-      return this.products.slice(
-        this.page == 1 ? 0 : this.page * this.per_page,
-        this.page * this.per_page > this.products.length ?
-      );
-       */
-    },
-  },
-
-  methods: {
-    ...mapActions({
-      'getProducts': 'product/getProducts',
-    }),
-  },
-
-  mounted() {
-    if (!this.productsLoaded) {
-      this.getProducts();
     }
   }
-}
 </script>
 <style>
 
